@@ -53,12 +53,13 @@ public class EmployeeService_Impl implements EmployeeService {
 	@Override
 	@Transactional
 	public boolean removeEmployee(int id) throws NoSuchEmployeeFoundException {
-		empRepo.deleteById(id);
+		
 		Optional<Employee> emp = empRepo.findById(id);
 		if (emp.isPresent()) {
+			empRepo.deleteById(id);
 			return false;
 		}
-		return true;
+		 throw new NoSuchEmployeeFoundException("No Employee found by this id");
 	}
 
 	@Override
